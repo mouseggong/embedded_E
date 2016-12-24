@@ -1,0 +1,40 @@
+group 'kr.co.eyear.stream'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.7
+
+repositories {
+    mavenCentral()
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class':'com.dgcse.embedded.MainServer'
+    }
+
+    exclude('logback.xml')
+    exclude('hibernate.cfg.xml')
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.12'
+}
+
+task copyToLib(type: Copy) {
+    into "lib"
+    from configurations.runtime
+}
+
+dependencies {
+    compile group: 'io.netty', name: 'netty-all', version: '4.0.4.Final'
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+
+    compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.1.8'
+    compile group: 'ch.qos.logback', name: 'logback-core', version: '1.1.8'
+
+    compile group: 'org.hibernate', name: 'hibernate-core', version: '5.2.1.Final'
+    compile group: 'commons-cli', name: 'commons-cli', version: '1.3.1'
+    compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.40'
+}
